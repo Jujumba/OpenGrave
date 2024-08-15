@@ -2,10 +2,9 @@ buildscript {
     ext.kotlin_version = '1.2.41'
 
     repositories {
-//        jcenter()
         mavenCentral()
         maven { url = "https://maven.minecraftforge.net/" }
-        maven { url = "https://jcenter.bintray.com/" } // new jcenter?
+        maven { url = "https://jcenter.bintray.com/" } // jcenter mirror?
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'

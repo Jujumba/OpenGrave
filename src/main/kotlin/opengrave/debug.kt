@@ -14,7 +14,6 @@ import java.util.logging.Level
 import java.util.logging.Logger
 
 object Debug {
-
     private val enabled: Boolean = System.getProperty("opengrave.debug")?.toBoolean() ?: false
 
     val log: Logger = Logger.getAnonymousLogger().apply {
@@ -51,7 +50,9 @@ object Debug {
             if ((rightClickingBlock and usingStick) xor (rightClickingAir and crouching and usingStick)) {
                 val pos = entityPlayer.findIdealGravePos()
                 val drops = entityPlayer.fullInventory
-                event.world?.spawnGrave(pos, entityPlayer.persistentID, drops, entityPlayer.getBaublesArray(), TextComponentString("DEBUG"))
+                val armor = entityPlayer.armorInventory
+                val offHand = entityPlayer.offHandInventory
+                event.world?.spawnGrave(pos, entityPlayer.persistentID, drops, armor, offHand, entityPlayer.getBaublesArray(), TextComponentString("DEBUG"))
             }
         }
     }

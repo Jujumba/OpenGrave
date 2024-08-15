@@ -2,13 +2,13 @@
 {
     "modid": "opengrave",
     "name": "Open Grave",
-    "description": "The simple gravestone mod.",
+    "description": "The simple gravestone mod (hopefully with some bugs removed).",
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "https://github.com/Yopu/OpenGrave",
     "updateUrl": "",
-    "authorList": [ "yopu" ],
-    "credits": "Made by yopu.\nSpecial thanks to everyone on IRC.",
+    "authorList": [ "yopu", "Jujumba" ],
+    "credits": "Made by yopu + kindly patched by Jujumba-Sempai ヽ(o＾▽＾o)ノ.\nSpecial thanks to everyone on IRC.",
     "logoFile": "",
     "screenshots": [],
     "dependencies": []

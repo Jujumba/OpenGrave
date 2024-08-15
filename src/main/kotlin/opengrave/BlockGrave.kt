@@ -21,7 +21,7 @@ object BlockGrave : BlockContainer(Material.ROCK) {
 
     init {
         setRegistryName("blockgrave")
-        setHardness(5.0F)
+        setHardness(0.1F)
         setResistance(6000000.0F)
     }
 
@@ -36,9 +36,9 @@ object BlockGrave : BlockContainer(Material.ROCK) {
     }
 
     override fun breakBlock(worldIn: World?, pos: BlockPos?, state: IBlockState?) {
-        val tileEntityGrave = worldIn?.getTileEntity(pos) as? TileEntityGrave?
+        val tileEntityGrave = worldIn?.getTileEntity(pos!!) as? TileEntityGrave?
         tileEntityGrave?.dropItems()
-        super.breakBlock(worldIn, pos, state)
+        super.breakBlock(worldIn!!, pos!!, state!!)
     }
 
     override fun onBlockActivated(worldIn: World?, pos: BlockPos?, state: IBlockState?, playerIn: EntityPlayer?, hand: EnumHand?, side: EnumFacing?, hitX: Float, hitY: Float, hitZ: Float): Boolean {

@@ -1,5 +1,6 @@
 package opengrave
 
+import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTBase
 import net.minecraft.nbt.NBTTagCompound
@@ -20,6 +21,16 @@ fun NBTTagCompound.getItemStackArray(key: String): Array<ItemStack?> {
     return itemStackList
 }
 
+fun InventoryPlayer.toNBTTag(): NBTBase {
+    val nbtTagList = NBTTagList()
+    for ((i, stack) in (this.mainInventory + this.armorInventory).withIndex()) {
+        val nbtTagCompound = NBTTagCompound()
+        nbtTagCompound.setInteger("slot", i)
+        stack?.writeToNBT(nbtTagCompound)
+        nbtTagList.appendTag(nbtTagCompound)
+    }
+    return nbtTagList
+}
 fun Array<ItemStack?>.toNBTTag(): NBTBase {
     val nbtTagList = NBTTagList()
     for ((i, stack) in this.withIndex()) {

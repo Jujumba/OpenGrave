@@ -14,10 +14,19 @@ val EntityPlayer.fullInventory: Array<ItemStack?>
     get() {
         val inv: ArrayList<ItemStack?> = arrayListOf()
         inv.addAll(inventory.mainInventory)
+        return inv.toTypedArray()
+    }
+val EntityPlayer.armorInventory: Array<ItemStack?>
+    get() {
+        val inv: ArrayList<ItemStack?> = arrayListOf()
         inv.addAll(inventory.armorInventory)
         return inv.toTypedArray()
     }
-
+val EntityPlayer.offHandInventory: ItemStack?
+    get() {
+        if (inventory.offHandInventory.size == 0) return null
+        return inventory.offHandInventory[0]
+    }
 fun ItemStack.dropInWorld(world: World, pos: BlockPos) {
     val throwawayInventory = InventoryBasic("throwaway", false, 1)
     throwawayInventory.setInventorySlotContents(0, this)

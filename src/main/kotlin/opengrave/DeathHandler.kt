@@ -19,10 +19,21 @@ object DeathHandler {
     var neighborSearchDepth: Int = 0
     var groundSearchDistance: Double = 0.0
     private var lastDeath: Triple<UUID, Array<ItemStack?>, Array<ItemStack?>>? = null
+    private var uuid: UUID? = null
+    private var inventory: Array<ItemStack?> = emptyArray() // Main inventory + offhand slot
+    private var armor: Array<ItemStack?> = emptyArray()
+    private var offHand: ItemStack? = null
+    private var baubles: Array<ItemStack?> = emptyArray()
+
 
     @SubscribeEvent
     fun handlePreDeath(event: LivingDeathEvent) {
         val entity = event.entity as? EntityPlayer ?: return
+        uuid = entity.persistentID
+        inventory = entity.fullInventory
+        armor = entity.armorInventory
+        offHand = entity.offHandInventory
+        baubles = entity.getBaublesArray()
         lastDeath = Triple(entity.persistentID, entity.fullInventory, entity.getBaublesArray())
     }
 
@@ -36,8 +47,7 @@ object DeathHandler {
             OpenGrave.log.error("GraveHandler's lastDeath uninitialized before handling a PlayerDropsEvent")
             return
         }
-        val (lastDeathPlayerID, lastDeathInventory, lastDeathBaubles) = lastDeath!!
-        if (entity.persistentID != lastDeathPlayerID) {
+        if (entity.persistentID != uuid) {
             OpenGrave.log.error("GraveHandler handled a PlayerDropsEvent from the incorrect player")
             return
         }
@@ -46,19 +56,19 @@ object DeathHandler {
         val pos = entity.findIdealGravePos()
         Debug.log.finest("using $pos")
         val deathMessage = event.source?.getDeathMessage(entity)
-        if (world.spawnGrave(pos, lastDeathPlayerID, lastDeathInventory, lastDeathBaubles, deathMessage)) {
+        if (world.spawnGrave(pos, uuid!!, inventory, armor, offHand, baubles, deathMessage)) {
             event.isCanceled = true
         }
     }
 
-    fun World.spawnGrave(pos: BlockPos, entityPlayerID: UUID, drops: Array<ItemStack?>, baubles: Array<ItemStack?>, deathMessage: ITextComponent?): Boolean {
+    fun World.spawnGrave(pos: BlockPos, entityPlayerID: UUID, drops: Array<ItemStack?>, armor: Array<ItemStack?>, offHand: ItemStack?, baubles: Array<ItemStack?>, deathMessage: ITextComponent?): Boolean {
         val blockHardness = getBlockState(pos).getBlockHardness(this, pos)
         if (blockHardness < 0)
             return false
 
         setBlockState(pos, BlockGrave.defaultState, 3)
         val tileEntity = getTileEntity(pos) as TileEntityGrave? ?: return false
-        tileEntity.takeDrops(entityPlayerID, drops, baubles, deathMessage)
+        tileEntity.takeDrops(entityPlayerID, drops, armor, offHand, baubles, deathMessage)
         return true
     }
 

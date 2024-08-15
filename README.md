@@ -10,6 +10,15 @@
 * New block model!
 * Added death method on right click!
 
+#### Edits in this fork
+* Correctly puts armor, baubles and offhand items on
+
+## Building this
+Good luck, but I'll be nice and will some hints:
+- Download and install Forge v14.23.3.2655 (a really ooooold version)
+- Find `forge-14.23.3.2655.jar` (or similar) and put in gradle cache
+- If needed, update the repositories in `build.gradle`
+
 ![light](example_screenshots/light.png)
 
 ![dark](example_screenshots/dark.png)
