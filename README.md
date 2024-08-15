@@ -12,9 +12,10 @@
 
 #### Edits in this fork
 * Correctly puts armor, baubles and offhand items on
+* Takes less time to break the grave block
 
 ## Building this
-Good luck, but I'll be nice and will some hints:
+Good luck, but I'll be nice and will leave some hints:
 - Download and install Forge v14.23.3.2655 (a really ooooold version)
 - Find `forge-14.23.3.2655.jar` (or similar) and put in gradle cache
 - If needed, update the repositories in `build.gradle`
